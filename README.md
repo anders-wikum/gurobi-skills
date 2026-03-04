@@ -64,8 +64,8 @@ pip install gurobipy
 | "My model status is GRB.INFEASIBLE, how do I find which constraints are causing it?" | Routes to `features/infeasibility.html` |
 | "How do I use the solution pool to get the top 5 solutions?"    | Routes to `features/solutionpool.html`     |
 | "What changed in the Gurobi 11 Python API?"                      | Routes to `/en/11.0/reference/python.html` |
-| "Which cuts should I enable for my knapsack problem?"            | Matches problem type to cut parameters via `gurobi-cut-config` |
-| "Disable all cutting planes in Gurobi"                           | Returns `model.setParam("Cuts", 0)` via `gurobi-cut-config` |
+| "Which cuts should I enable for my knapsack problem?"            | Matches problem type to relevant cutting plane families |
+| "Tune cutting plane settings across my dataset of VRP instances" | Writes a script to generate and test cutting plane configurations |
 
 ## Repository Structure
 
