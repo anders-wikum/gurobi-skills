@@ -39,9 +39,10 @@ git clone https://github.com/henryrobbins/gurobi-skills ~/.claude/skills/gurobi
 
 ## Skills
 
-| Skill          | Purpose                                    | When to Use                                               |
-| -------------- | ------------------------------------------ | --------------------------------------------------------- |
-| `gurobi-docs`  | Navigate the Gurobi Optimizer docs         | Any question about gurobipy API, parameters, attributes, features, or solver behavior |
+| Skill              | Purpose                                    | When to Use                                               |
+| ------------------ | ------------------------------------------ | --------------------------------------------------------- |
+| `gurobi-docs`      | Navigate the Gurobi Optimizer docs         | Any question about gurobipy API, parameters, attributes, features, or solver behavior |
+| `gurobi-cut-config` | Configure cutting plane separators         | Enabling, disabling, or tuning Gurobi cut parameters for specific problem types |
 
 ## Quick Start
 
@@ -63,6 +64,8 @@ pip install gurobipy
 | "My model status is GRB.INFEASIBLE, how do I find which constraints are causing it?" | Routes to `features/infeasibility.html` |
 | "How do I use the solution pool to get the top 5 solutions?"    | Routes to `features/solutionpool.html`     |
 | "What changed in the Gurobi 11 Python API?"                      | Routes to `/en/11.0/reference/python.html` |
+| "Which cuts should I enable for my knapsack problem?"            | Matches problem type to cut parameters via `gurobi-cut-config` |
+| "Disable all cutting planes in Gurobi"                           | Returns `model.setParam("Cuts", 0)` via `gurobi-cut-config` |
 
 ## Repository Structure
 
@@ -72,20 +75,30 @@ gurobi-skills/
 │   ├── SKILL.md              # Navigation decision tree + routing rules
 │   └── references/
 │       └── url-map.md        # Complete URL index for all doc sections
+├── gurobi-cut-config/
+│   ├── SKILL.md              # Cut parameter decision tree + quick reference
+│   └── references/
+│       └── separators.md     # Detailed descriptions of all 17 Gurobi separators
 ├── evals/
 │   └── evals.json            # Test cases for the skill
 └── README.md
 ```
 
-## How the Skill Works
+## How the Skills Work
 
-The `gurobi-docs` skill teaches AI agents to navigate `docs.gurobi.com` accurately instead of relying on training data that may be outdated. It uses a decision tree to route questions to the right section:
+### gurobi-docs
+
+Teaches AI agents to navigate `docs.gurobi.com` accurately instead of relying on training data that may be outdated. Uses a decision tree to route questions to the right section:
 
 - **API methods** (e.g., `addConstr`, `addMVar`, `optimize`) → `reference/python/model.html`
 - **Parameters** (e.g., `TimeLimit`, `MIPGap`, `Threads`) → `reference/parameters.html`
 - **Attributes** (e.g., `ObjVal`, `X`, `Pi`, `Status`) → `reference/attributes.html`
 - **Named features** (callbacks, infeasibility, solution pool, multiple objectives) → `features/`
 - **Version-specific questions** → swaps `current` for the version number (e.g., `/en/11.0/`)
+
+### gurobi-cut-config
+
+Provides a quick-reference table and detailed descriptions for all 17 Gurobi cutting plane separators (plus global cut controls). Helps agents recommend which cuts to enable, disable, or tune based on problem structure — e.g., knapsack constraints → Cover/MIR cuts, network flow → Network/FlowCover cuts. Includes common recipes for cut configuration.
 
 ## Resources
 
